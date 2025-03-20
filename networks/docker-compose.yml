@@ -1,0 +1,5 @@
+networks:
+  internal-app:
+    driver: overlay
+  internal-db:
+    driver: overlay

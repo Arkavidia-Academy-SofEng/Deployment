@@ -1,0 +1,17 @@
+networks:
+  internal-db:
+    external: true
+
+services:
+  redis:
+    image: "bitnami/redis:latest"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - internal-db

@@ -1,0 +1,40 @@
+networks:
+  internal-db:
+    external: true
+
+services:
+  postgres:
+    image: postgres:14
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+    environment:
+      POSTGRES_USER: arkavidia4
+      POSTGRES_PASSWORD: arkavidia4
+      POSTGRES_DB: arkavidia4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - internal-db
+    ports:
+      - "5432:5432"
+
+  # adminer:
+  #   image: adminer
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints: [node.role == manager]
+  #     restart_policy:
+  #       condition: any
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - internal-db
+
+volumes:
+  db-data:
+    driver: local
